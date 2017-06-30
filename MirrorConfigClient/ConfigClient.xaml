@@ -1,0 +1,126 @@
+﻿<Window x:Class="MirrorConfigClient.ConfigClient"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Basics="clr-namespace:MirrorConfigClient.Basics"
+        xmlns:Graph="clr-namespace:MirrorConfigClient.Graph"
+        xmlns:Views="clr-namespace:MirrorConfigClient.Views"
+        xmlns:Converter="clr-namespace:MirrorConfigClient.ValueConverter"
+        Title="WPFGraphLibrary"
+        WindowState="Maximized">
+
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding SaveCmd, Mode=OneTime}" Key="S" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding UndoCmd, Mode=OneTime}" Key="Z" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding RedoCmd, Mode=OneTime}" Key="Y" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding RedoCmd, Mode=OneTime}" Key="Z" Modifiers="Ctrl+Shift"/>
+    </Window.InputBindings>
+
+    <Window.Resources>
+        <Converter:StoryNoteToViewModelConverter x:Key="StoryToViewModel"/>
+        <Converter:ObjectAvaiableConverter x:Key="ObjectAvaiable"/>
+        <Views:AboutView x:Key="AboutView"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1"
+              HorizontalAlignment="Left"
+              Margin="5,0,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnUndo"
+                    Command="{Binding UndoCmd, Mode=OneWay}"
+                    ToolTip="Rückgängig"
+                    Margin="5"
+                    Width="25"
+                    Height="25"
+                    Style="{StaticResource btnStyle}"
+                    Grid.Row="1"
+                    Grid.Column="0">
+                <Path Style="{StaticResource pathStyle}"
+                      Data="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+            </Button>
+
+            <Button x:Name="btnRedo"
+                    Command="{Binding RedoCmd, Mode=OneWay}"
+                    ToolTip="Wiederholen"
+                    Margin="5"
+                    Width="25"
+                    Height="25"
+                    Style="{StaticResource btnStyle}"
+                    Grid.Row="1"
+                    Grid.Column="1">
+                <Path Style="{StaticResource pathStyle}"
+                      Data="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"/>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="1"
+              HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <ToggleButton x:Name="btnAbout"
+                          Style="{StaticResource tglbtnStyle}"
+                          ToolTip="Über&#8230;"
+                          Margin="5,0,10,0"
+                          Width="25"
+                          Height="25"
+                          Grid.Column="1"
+                          Basics:ControlAdorner.Content="{StaticResource AboutView}"
+                          Basics:ControlAdorner.BackgroundColor="#F0F0F0"
+                          Basics:ControlAdorner.IsOpen="{Binding IsChecked, Mode=TwoWay, ElementName=btnAbout}">
+                <Path Style="{StaticResource pathTglStyle}"
+                      Data="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
+            </ToggleButton>
+        </Grid>
+
+        <AdornerDecorator Grid.Row="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="530"/>
+                </Grid.ColumnDefinitions>
+                
+                <Graph:GraphUIView x:Name="Graph" 
+                                   Grid.Column="0"
+                                   Grid.Row="0"
+                                   LineThickness="3"
+                                   BorderThickness="2"/>
+                <GridSplitter x:Name="SplitterVertical"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Stretch"
+                              Grid.Column="0"
+                              Grid.Row="0">
+                    <GridSplitter.Template>
+                        <ControlTemplate TargetType="{x:Type GridSplitter}">
+                            <Grid Width="10"
+                                          Background="Transparent">
+                                <Rectangle Fill="DarkGray"
+                                           Width="1"
+                                           HorizontalAlignment="Center"/>
+                                <Rectangle Fill="White"
+                                           Width="4"
+                                           HorizontalAlignment="Right"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </GridSplitter.Template>
+                </GridSplitter>
+                <Views:StoryDetailView x:Name="StoryDetails"
+                                       Grid.Column="1"
+                                       Grid.Row="0"
+                                       DataContext="{Binding Path=SelectedStoryVM, Mode=TwoWay, ElementName=Graph}"
+                                       IsContentEnabled="{Binding Path=SelectedStory, Mode=OneWay, ElementName=Graph, Converter={StaticResource ObjectAvaiable}}"/>
+            </Grid>
+        </AdornerDecorator>
+    </Grid>
+</Window>

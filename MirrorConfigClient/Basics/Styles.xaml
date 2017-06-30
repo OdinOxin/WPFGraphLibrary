@@ -1,0 +1,149 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:Converter="clr-namespace:MirrorConfigClient.ValueConverter">
+
+    <Style x:Key="btnStyle"
+           TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="Arrow"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="tglbtnStyle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="Arrow"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="pathStyle"
+           TargetType="{x:Type Path}">
+        <Setter Property="Fill" Value="Black" />
+        <Setter Property="Stretch" Value="Uniform"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Fill" Value="#039ED3"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect ShadowDepth="0" Color="#039ED3" Opacity="1" BlurRadius="3"/>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsEnabled}" Value="False">
+                <Setter Property="Fill" Value="Gray"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="pathTglStyle"
+           TargetType="{x:Type Path}">
+        <Setter Property="Fill" Value="Black" />
+        <Setter Property="Stretch" Value="Uniform"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsChecked}" Value="True">
+                <Setter Property="Fill" Value="Orange"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect ShadowDepth="0" Color="Orange" Opacity="1" BlurRadius="3"/>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Fill" Value="#039ED3"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect ShadowDepth="0" Color="#039ED3" Opacity="1" BlurRadius="3"/>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, Path=IsEnabled}" Value="False">
+                <Setter Property="Fill" Value="Gray"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="labelStyle"
+           TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="Black" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Foreground" Value="#039ED3"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect ShadowDepth="0" Color="#039ED3" Opacity="1" BlurRadius="3"/>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsEnabled}" Value="False">
+                <Setter Property="Foreground" Value="Gray"/>
+            </DataTrigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <AdornerDecorator x:Key="popUpTemplate" Opacity="1" Margin="0,0,5,0">
+        <AdornerDecorator.Effect>
+            <DropShadowEffect BlurRadius="10" ShadowDepth="0.1"/>
+        </AdornerDecorator.Effect>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Border x:Name="Border"
+                    Background="#F0F0F0"
+				    BorderThickness="0"
+				    CornerRadius="5"
+				    Margin="5">
+                <Grid>
+                    <ContentPresenter x:Name="ContentPresenter"/>
+                    <Button x:Name="btnClose"
+                            Style="{StaticResource btnStyle}"
+						    ToolTip="Schließen"
+						    Margin="5"
+						    Width="10"
+						    Height="10"
+						    VerticalAlignment="Top"
+						    HorizontalAlignment="Right">
+                        <Path Style="{StaticResource pathStyle}"
+						      Data="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </Button>
+                </Grid>
+            </Border>
+            <Polygon x:Name="Polygon"
+                     Fill="#F0F0F0"
+				     Opacity="1"
+				     Grid.Column="1"
+				     Margin="-6,10,0,0">
+                <Polygon.Points>
+                    <Point X="0" Y="0"/>
+                    <Point X="15" Y="10"/>
+                    <Point X="0" Y="20"/>
+                </Polygon.Points>
+            </Polygon>
+        </Grid>
+    </AdornerDecorator>
+
+</ResourceDictionary>

@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="MirrorConfigClient.Graph.NodeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Cursor="Arrow">
+    <Border x:Name="border"
+            BorderThickness="1"
+            CornerRadius="3">
+        <Border.BorderBrush>
+            <VisualBrush>
+                <VisualBrush.Visual>
+                    <Rectangle x:Name="dash"
+                               StrokeThickness="1"
+                               Stroke="Black"
+                               RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                               RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                               Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                               Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"/>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Border.BorderBrush>
+        <TextBlock x:Name="txtTitle"
+                   Padding="5"
+                   Text="{Binding Title, Mode=OneWay}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+    </Border>
+</UserControl>
