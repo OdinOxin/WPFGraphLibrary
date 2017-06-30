@@ -1,6 +1,8 @@
-﻿using MirrorConfigClient.ChangeTracking;
+﻿using MirrorConfigBL.Story;
+using MirrorConfigClient.ChangeTracking;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -24,6 +26,8 @@ namespace MirrorConfigClient
 
             Graph.ChangeTracker = this;
             StoryDetails.ChangeTracker = this;
+            StoryUtils.CreateRandomStoryConfig(10);
+            Graph.Stories = new ObservableCollection<StoryNode>(StoryUtils.GetUtilsInstance().GetAllStoryNodes());
         }
         #endregion
 
