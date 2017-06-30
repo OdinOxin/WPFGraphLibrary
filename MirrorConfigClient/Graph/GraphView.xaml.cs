@@ -63,7 +63,7 @@ namespace MirrorConfigClient.Graph
                 }
             });
 
-            RelayoutCmd = new RelayCommand((x) => true, (x) => BuildGraph());
+            RelayoutCmd = new RelayCommand((x) => true, (x) => ProcessStories());
             ShuffleCmd = new RelayCommand((x) => true, (x) =>
             {
                 if (Debugger.IsAttached)
@@ -335,7 +335,7 @@ namespace MirrorConfigClient.Graph
             IsEmpty = NewValue == null || NewValue.Count == 0;
             if (NewValue != null)
                 NewValue.CollectionChanged += Stories_CollectionChanged;
-            BuildGraph();
+            ProcessStories();
             centerAfterDraw = true;
         }
         #endregion
@@ -852,7 +852,7 @@ namespace MirrorConfigClient.Graph
         #endregion
 
         #region ProcessStories
-        public void BuildGraph()
+        private void ProcessStories()
         {
             board.Children.Clear();
             nodeViews.Clear();

@@ -91,7 +91,7 @@
                     <ColumnDefinition Width="530"/>
                 </Grid.ColumnDefinitions>
                 
-                <Graph:GraphUIView x:Name="Graph" 
+                <Graph:GraphView x:Name="Graph" 
                                    Grid.Column="0"
                                    Grid.Row="0"
                                    LineThickness="3"

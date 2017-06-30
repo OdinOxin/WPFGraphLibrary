@@ -63,8 +63,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Basics\ControlAdorner.cs" />
-    <Compile Include="Graph\GraphUIView.xaml.cs">
-      <DependentUpon>GraphUIView.xaml</DependentUpon>
+    <Compile Include="Graph\GraphView.xaml.cs">
+      <DependentUpon>GraphView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIHelper.cs" />
     <Compile Include="ChangeTracking\ChangeTracker.cs" />
@@ -96,14 +96,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Graph\GraphUIView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Graph\GraphView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ConfigClient.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,15 +108,16 @@
       <DependentUpon>EdgeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Graph\GeometryUtils.cs" />
-    <Compile Include="Graph\GraphView.xaml.cs">
-      <DependentUpon>GraphView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Graph\Selectable.cs" />
     <Compile Include="Graph\SelectionState.cs" />
     <Compile Include="ConfigClient.xaml.cs">
       <DependentUpon>ConfigClient.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Graph\GraphView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Graph\NodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
