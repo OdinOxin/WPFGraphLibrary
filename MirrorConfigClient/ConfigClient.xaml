@@ -9,7 +9,6 @@
         WindowState="Maximized">
 
     <Window.InputBindings>
-        <KeyBinding Command="{Binding SaveCmd, Mode=OneTime}" Key="S" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding UndoCmd, Mode=OneTime}" Key="Z" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding RedoCmd, Mode=OneTime}" Key="Y" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding RedoCmd, Mode=OneTime}" Key="Z" Modifiers="Ctrl+Shift"/>
@@ -92,10 +91,13 @@
                 </Grid.ColumnDefinitions>
                 
                 <Graph:GraphView x:Name="Graph" 
-                                   Grid.Column="0"
-                                   Grid.Row="0"
-                                   LineThickness="3"
-                                   BorderThickness="2"/>
+                                 Grid.Column="0"
+                                 Grid.Row="0"
+                                 LineThickness="3"
+                                 AllowHovering="True"
+                                 ShowSelection="True"
+                                 AllowEditing="True"
+                                 BorderThickness="2"/>
                 <GridSplitter x:Name="SplitterVertical"
                               HorizontalAlignment="Right"
                               VerticalAlignment="Stretch"

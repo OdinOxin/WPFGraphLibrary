@@ -77,15 +77,15 @@ namespace MirrorConfigClient.Graph
             });
             HomeCmd = new RelayCommand((x) => true, (x) => Center());
 
-            NewNodeCmd = new RelayCommand((x) => true, (x) => NewNode());
-            DeleteCmd = new RelayCommand((x) => Selection != null, (x) =>
+            NewNodeCmd = new RelayCommand((x) => AllowEditing, (x) => NewNode());
+            DeleteCmd = new RelayCommand((x) => AllowEditing && Selection != null, (x) =>
             {
                 if (Selection is NodeView)
                     DeleteNode((Selection as NodeView).Story);
                 else if (Selection is EdgeView)
                     DeleteEdge((Selection as EdgeView).Start.Story, (Selection as EdgeView).End.Story);
             });
-            DeleteAllCmd = new RelayCommand((x) => Stories.Count > 0, (x) =>
+            DeleteAllCmd = new RelayCommand((x) => AllowEditing && Stories.Count > 0, (x) =>
             {
                 MessageBoxResult messageBoxResult = MessageBox.Show("Wirklich alles löschen?\nDies kann nicht rückgängig gemacht werden!", "Löschen bestätigen\u2026", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (messageBoxResult == MessageBoxResult.Yes)
@@ -171,7 +171,7 @@ namespace MirrorConfigClient.Graph
                 return rect.Contains(e.GetPosition(board));
             });
             HoverNode(hovered?.Story);
-            if (hovered != null)
+            if (AllowEditing && hovered != null)
             {
                 if (dot == null)
                 {
@@ -253,9 +253,12 @@ namespace MirrorConfigClient.Graph
             {
                 if (dragging != null)
                     board.Children.Remove(dragging);
-                dragging = new EdgeView(this, clicked, null) { TmpEnd = e.GetPosition(board), LineThickness = LineThickness };
-                board.Children.Add(dragging);
-                Cursor = Cursors.Arrow;
+                if (AllowEditing)
+                {
+                    dragging = new EdgeView(this, clicked, null) { TmpEnd = e.GetPosition(board), LineThickness = LineThickness };
+                    board.Children.Add(dragging);
+                    Cursor = Cursors.Arrow;
+                }
                 e.Handled = true;
             }
         }
@@ -485,7 +488,7 @@ namespace MirrorConfigClient.Graph
             if (OldValue != null)
                 OldValue.IsSelected = false;
             if (NewValue != null)
-                NewValue.IsSelected = true;
+                NewValue.IsSelected = ShowSelection;
             SelectedStory = (NewValue as NodeView)?.Story;
         }
         #endregion
@@ -622,6 +625,138 @@ namespace MirrorConfigClient.Graph
         }
         #endregion
 
+        #region AllowHovering
+        /// <summary>
+        /// The backing field for the AllowHovering dependency property.
+        /// </summary>
+        public static readonly DependencyProperty AllowHoveringProperty = DependencyProperty.Register("AllowHovering", typeof(bool), typeof(GraphView), new PropertyMetadata(true, OnAllowHoveringPropertyChanged));
+
+        /// <summary>
+        /// Called when the AllowHovering depenency property changed.
+        /// </summary>
+        /// <param name="o">The dependency object that owns the dependency property.</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        public static void OnAllowHoveringPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            GraphView Sender = o as GraphView;
+            Sender.OnAllowHoveringChanged((bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        /// <summary>
+        /// Gets or sets the AllowHovering.
+        /// </summary>
+        /// <value>The layers.</value>
+        public bool AllowHovering
+        {
+            get
+            {
+                return (bool)GetValue(AllowHoveringProperty);
+            }
+            set
+            {
+                SetValue(AllowHoveringProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Called when the AllowHovering dependency property changes.
+        /// </summary>
+        /// <param name="OldValue">The old value.</param>
+        /// <param name="NewValue">The new value.</param>
+        protected virtual void OnAllowHoveringChanged(bool OldValue, bool NewValue)
+        {
+
+        }
+        #endregion
+
+        #region ShowSelection
+        /// <summary>
+        /// The backing field for the ShowSelection dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ShowSelectionProperty = DependencyProperty.Register("ShowSelection", typeof(bool), typeof(GraphView), new PropertyMetadata(true, OnShowSelectionPropertyChanged));
+
+        /// <summary>
+        /// Called when the ShowSelection depenency property changed.
+        /// </summary>
+        /// <param name="o">The dependency object that owns the dependency property.</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        public static void OnShowSelectionPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            GraphView Sender = o as GraphView;
+            Sender.OnShowSelectionChanged((bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        /// <summary>
+        /// Gets or sets the ShowSelection.
+        /// </summary>
+        /// <value>The layers.</value>
+        public bool ShowSelection
+        {
+            get
+            {
+                return (bool)GetValue(ShowSelectionProperty);
+            }
+            set
+            {
+                SetValue(ShowSelectionProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Called when the ShowSelection dependency property changes.
+        /// </summary>
+        /// <param name="OldValue">The old value.</param>
+        /// <param name="NewValue">The new value.</param>
+        protected virtual void OnShowSelectionChanged(bool OldValue, bool NewValue)
+        {
+
+        }
+        #endregion
+
+        #region AllowEditing
+        /// <summary>
+        /// The backing field for the AllowEditing dependency property.
+        /// </summary>
+        public static readonly DependencyProperty AllowEditingProperty = DependencyProperty.Register("AllowEditing", typeof(bool), typeof(GraphView), new PropertyMetadata(true, OnAllowEditingPropertyChanged));
+
+        /// <summary>
+        /// Called when the AllowEditing depenency property changed.
+        /// </summary>
+        /// <param name="o">The dependency object that owns the dependency property.</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        public static void OnAllowEditingPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            GraphView Sender = o as GraphView;
+            Sender.OnAllowEditingChanged((bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        /// <summary>
+        /// Gets or sets the AllowEditing.
+        /// </summary>
+        /// <value>The layers.</value>
+        public bool AllowEditing
+        {
+            get
+            {
+                return (bool)GetValue(AllowEditingProperty);
+            }
+            set
+            {
+                SetValue(AllowEditingProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Called when the AllowEditing dependency property changes.
+        /// </summary>
+        /// <param name="OldValue">The old value.</param>
+        /// <param name="NewValue">The new value.</param>
+        protected virtual void OnAllowEditingChanged(bool OldValue, bool NewValue)
+        {
+
+        }
+        #endregion
+
         #endregion
 
         #region [Properties]
@@ -678,6 +813,9 @@ namespace MirrorConfigClient.Graph
         /// <param name="track">Whether change should be traked to undo / redo</param>
         public NodeView NewNode(StoryNode source = null, int columnAssin = -1, bool track = true)
         {
+            if (!AllowEditing)
+                return null;
+
             StoryNode story = StoryUtils.GetUtilsInstance().AddStoryNode(source == null ? new StoryNode() : source);
             if (!Stories.Contains(story))
             {
@@ -722,6 +860,9 @@ namespace MirrorConfigClient.Graph
         /// <param name="track">Whether change should be traked to undo / redo</param>
         public EdgeView NewEdge(StoryNode from, StoryNode to, bool track = true)
         {
+            if (!AllowEditing)
+                return null;
+
             if (from != null && to != null && !from.NextStoryIDs.Contains(to.StoryID))
             {
                 NodeView srcView = nodeViews.FirstOrDefault(x => x.Story == from);
@@ -755,10 +896,10 @@ namespace MirrorConfigClient.Graph
         /// <param name="track">Whether change should be traked to undo / redo</param>
         public bool DeleteNode(StoryNode story, bool track = true)
         {
-            if (story == null)
+            if (!AllowEditing || story == null)
                 return false;
             MessageBoxResult messageBoxResult = MessageBox.Show($"Knoten \"{story.Title}\" wirklich löschen?", "Löschen bestätigen\u2026", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            if (messageBoxResult == MessageBoxResult.Yes && columnAssign.ContainsKey(story))
             {
                 int assign = columnAssign[story];
                 List<StoryNode> previous = Stories.Where(x => x.NextStoryIDs.Contains(story.StoryID)).ToList();
@@ -801,6 +942,9 @@ namespace MirrorConfigClient.Graph
         /// <param name="track">Whether change should be traked to undo / redo</param>
         public void DeleteEdge(StoryNode from, StoryNode to, bool track = true)
         {
+            if (!AllowEditing)
+                return;
+
             EdgeView edgeView = edgeViews.First(x => x.Start.Story == from && x.End.Story == to);
             NodeView srcView = nodeViews.First(x => x.Story == from);
             if (Selection == edgeView)
@@ -829,7 +973,7 @@ namespace MirrorConfigClient.Graph
             for (int i = 0; i < nodeViews.Count; i++)
             {
                 HoverState hovering = HoverState.NOT;
-                if (story != null)
+                if (story != null && AllowHovering)
                 {
                     if (nodeViews[i].Story == story)
                         hovering = hovering | HoverState.SELF;
@@ -842,11 +986,12 @@ namespace MirrorConfigClient.Graph
                     }
                 }
                 nodeViews[i].Hovering = hovering;
-                foreach (EdgeView edgeView in edgeViews.Where(x => (x.Start == nodeViews[i] && x.End.Story == story) || (x.Start.Story == story && x.End == nodeViews[i])))
-                {
-                    edgeView.Hovering = hovering;
-                    Canvas.SetZIndex(edgeView, 1);
-                }
+                if (AllowHovering)
+                    foreach (EdgeView edgeView in edgeViews.Where(x => (x.Start == nodeViews[i] && x.End.Story == story) || (x.Start.Story == story && x.End == nodeViews[i])))
+                    {
+                        edgeView.Hovering = hovering;
+                        Canvas.SetZIndex(edgeView, 1);
+                    }
             }
         }
         #endregion

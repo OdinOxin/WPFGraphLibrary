@@ -356,7 +356,7 @@ namespace MirrorConfigClient.Graph
         /// <param name="NewValue">The new value.</param>
         protected virtual void OnLineThicknessChanged(double OldValue, double NewValue)
         {
-            double thickness = (IsSelected ? 1.5 : 1) * NewValue;
+            double thickness = NewValue;
             if (path != null)
                 foreach (Line seq in path)
                     seq.StrokeThickness = thickness;
