@@ -757,6 +757,138 @@ namespace MirrorConfigClient.Graph
         }
         #endregion
 
+        #region ShowRelayoutButton
+        /// <summary>
+        /// The backing field for the ShowRelayoutButton dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ShowRelayoutButtonProperty = DependencyProperty.Register("ShowRelayoutButton", typeof(bool), typeof(GraphView), new PropertyMetadata(true, OnShowRelayoutButtonPropertyChanged));
+
+        /// <summary>
+        /// Called when the ShowRelayoutButton depenency property changed.
+        /// </summary>
+        /// <param name="o">The dependency object that owns the dependency property.</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        public static void OnShowRelayoutButtonPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            GraphView Sender = o as GraphView;
+            Sender.OnShowRelayoutButtonChanged((bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        /// <summary>
+        /// Gets or sets the ShowRelayoutButton.
+        /// </summary>
+        /// <value>The layers.</value>
+        public bool ShowRelayoutButton
+        {
+            get
+            {
+                return (bool)GetValue(ShowRelayoutButtonProperty);
+            }
+            set
+            {
+                SetValue(ShowRelayoutButtonProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Called when the ShowRelayoutButton dependency property changes.
+        /// </summary>
+        /// <param name="OldValue">The old value.</param>
+        /// <param name="NewValue">The new value.</param>
+        protected virtual void OnShowRelayoutButtonChanged(bool OldValue, bool NewValue)
+        {
+
+        }
+        #endregion
+
+        #region ShowHomeButton
+        /// <summary>
+        /// The backing field for the ShowHomeButton dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ShowHomeButtonProperty = DependencyProperty.Register("ShowHomeButton", typeof(bool), typeof(GraphView), new PropertyMetadata(true, OnShowHomeButtonPropertyChanged));
+
+        /// <summary>
+        /// Called when the ShowHomeButton depenency property changed.
+        /// </summary>
+        /// <param name="o">The dependency object that owns the dependency property.</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        public static void OnShowHomeButtonPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            GraphView Sender = o as GraphView;
+            Sender.OnShowHomeButtonChanged((bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        /// <summary>
+        /// Gets or sets the ShowHomeButton.
+        /// </summary>
+        /// <value>The layers.</value>
+        public bool ShowHomeButton
+        {
+            get
+            {
+                return (bool)GetValue(ShowHomeButtonProperty);
+            }
+            set
+            {
+                SetValue(ShowHomeButtonProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Called when the ShowHomeButton dependency property changes.
+        /// </summary>
+        /// <param name="OldValue">The old value.</param>
+        /// <param name="NewValue">The new value.</param>
+        protected virtual void OnShowHomeButtonChanged(bool OldValue, bool NewValue)
+        {
+
+        }
+        #endregion
+
+        #region ShowEditButtons
+        /// <summary>
+        /// The backing field for the ShowEditButtons dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ShowEditButtonsProperty = DependencyProperty.Register("ShowEditButtons", typeof(bool), typeof(GraphView), new PropertyMetadata(true, OnShowEditButtonsPropertyChanged));
+
+        /// <summary>
+        /// Called when the ShowEditButtons depenency property changed.
+        /// </summary>
+        /// <param name="o">The dependency object that owns the dependency property.</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        public static void OnShowEditButtonsPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            GraphView Sender = o as GraphView;
+            Sender.OnShowEditButtonsChanged((bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        /// <summary>
+        /// Gets or sets the ShowEditButtons.
+        /// </summary>
+        /// <value>The layers.</value>
+        public bool ShowEditButtons
+        {
+            get
+            {
+                return (bool)GetValue(ShowEditButtonsProperty);
+            }
+            set
+            {
+                SetValue(ShowEditButtonsProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Called when the ShowEditButtons dependency property changes.
+        /// </summary>
+        /// <param name="OldValue">The old value.</param>
+        /// <param name="NewValue">The new value.</param>
+        protected virtual void OnShowEditButtonsChanged(bool OldValue, bool NewValue)
+        {
+
+        }
+        #endregion
+
         #endregion
 
         #region [Properties]

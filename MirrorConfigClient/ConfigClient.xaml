@@ -97,6 +97,9 @@
                                  AllowHovering="True"
                                  ShowSelection="True"
                                  AllowEditing="True"
+                                 ShowRelayoutButton="True"
+                                 ShowHomeButton="True"
+                                 ShowEditButtons="False"
                                  BorderThickness="2"/>
                 <GridSplitter x:Name="SplitterVertical"
                               HorizontalAlignment="Right"

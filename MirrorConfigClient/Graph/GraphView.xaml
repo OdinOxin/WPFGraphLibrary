@@ -34,12 +34,14 @@
     <Grid x:Name="MouseCatcher"
           Background="Transparent">
         <Grid.Resources>
-            <Converter:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+            <Converter:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+            <Converter:SpecialVisibilityConverter x:Key="SpecialVisibility"/>
         </Grid.Resources>
 
         <Grid.ContextMenu>
             <ContextMenu x:Name="menu" Visibility="{Binding ShowContextMenu, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
-                <MenuItem Header="Graph neu anordnen" Command="{Binding RelayoutCmd, Mode=OneWay}">
+                <MenuItem Header="Graph neu anordnen" Command="{Binding RelayoutCmd, Mode=OneWay}"
+                          Visibility="{Binding ShowRelayoutButton, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                     <MenuItem.Icon>
                         <Path Data="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z">
                             <Path.Style>
@@ -56,7 +58,8 @@
                         </Path>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Ansicht zentrieren" Command="{Binding HomeCmd, Mode=OneWay}">
+                <MenuItem Header="Ansicht zentrieren" Command="{Binding HomeCmd, Mode=OneWay}"
+                          Visibility="{Binding ShowHomeButton, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                     <MenuItem.Icon>
                         <Path Data="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z">
                             <Path.Style>
@@ -73,8 +76,17 @@
                         </Path>
                     </MenuItem.Icon>
                 </MenuItem>
-                <Separator/>
-                <MenuItem Header="Neuen Knoten hinzufügen" Command="{Binding NewNodeCmd, Mode=OneWay}">
+                <Separator>
+                    <Separator.Visibility>
+                        <MultiBinding Converter="{StaticResource SpecialVisibility}">
+                            <Binding Path="ShowRelayoutButton" Mode="OneWay"/>
+                            <Binding Path="ShowHomeButton" Mode="OneWay"/>
+                            <Binding Path="ShowEditButtons" Mode="OneWay"/>
+                        </MultiBinding>
+                    </Separator.Visibility>
+                </Separator>
+                <MenuItem Header="Neuen Knoten hinzufügen" Command="{Binding NewNodeCmd, Mode=OneWay}"
+                          Visibility="{Binding ShowEditButtons, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                     <MenuItem.Icon>
                         <Path Data="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
                             <Path.Style>
@@ -91,7 +103,8 @@
                         </Path>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Auswahl löschen" Command="{Binding DeleteCmd, Mode=OneWay}">
+                <MenuItem Header="Auswahl löschen" Command="{Binding DeleteCmd, Mode=OneWay}"
+                          Visibility="{Binding ShowEditButtons, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                     <MenuItem.Icon>
                         <Path Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z">
                             <Path.Style>
@@ -129,6 +142,7 @@
                     Width="25"
                     Height="25"
                     Style="{StaticResource btnStyle}"
+                    Visibility="{Binding ShowRelayoutButton, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
                     Grid.Column="0">
                 <Path Style="{StaticResource pathStyle}"
                       Data="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
@@ -154,6 +168,7 @@
                     Width="25"
                     Height="25"
                     Style="{StaticResource btnStyle}"
+                    Visibility="{Binding ShowHomeButton, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
                     Grid.Column="2">
                 <Path Style="{StaticResource pathStyle}"
                       Data="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
@@ -161,7 +176,8 @@
         </Grid>
         <Grid VerticalAlignment="Top"
               HorizontalAlignment="Right"
-              Margin="0,0,5,0">
+              Margin="0,0,5,0"
+              Visibility="{Binding ShowEditButtons, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

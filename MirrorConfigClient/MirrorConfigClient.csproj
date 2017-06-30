@@ -72,6 +72,7 @@
     <Compile Include="ExtendedEventArgs.cs" />
     <Compile Include="INotifyPropertyChangedExtended.cs" />
     <Compile Include="InputBindingBehavior.cs" />
+    <Compile Include="ValueConverter\SpecialVisibilityConverter.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
